@@ -1,9 +1,27 @@
 import win32gui
 import win32com.client
-import time
 import pyautogui
 import os
 from datetime import datetime
+
+def is_in_game(window_title):
+    hwnd = win32gui.FindWindow(None, window_title)
+    if not hwnd:
+        return False
+    
+    if not win32gui.IsWindowVisible(hwnd):
+        return False
+
+    # window boundary
+    left, top, right, bottom = win32gui.GetWindowRect(hwnd)
+
+    # get current cursor position
+    x, y = pyautogui.position()
+    # check if cursor is in window
+    if left < x < right and top < y < bottom:
+        return True
+    else:
+        return False
 
 def bring_window_to_front(window_title):
     hwnd = win32gui.FindWindow(None, window_title)
@@ -35,7 +53,7 @@ def print_all_windows_title():
                 print(window_title)
     win32gui.EnumWindows(enum_windows_callback, None)
 
-def capture_screenshot(e):
+def capture_screenshot(e, image_path=None):
     # 獲取當前滑鼠位置
     x, y = pyautogui.position()
     
@@ -47,8 +65,9 @@ def capture_screenshot(e):
         image_size, 
         image_size
     ))
-    
-    image_path = ".\imgs_tmp"
+
+    if image_path is None:
+        image_path = ".\imgs_tmp"
     # 確保.\imgs目錄存在
     if not os.path.exists(image_path):
         os.makedirs(image_path)

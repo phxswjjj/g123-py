@@ -1,4 +1,5 @@
-from utils.window_utils import bring_window_to_front, capture_screenshot
+from game.worker.collect_money import CollectMoneyWorker
+from utils.window_utils import bring_window_to_front
 from game.game_info import GameInfo
 import time
 import keyboard
@@ -22,11 +23,14 @@ def main():
 
     # register F1 and F2 key press events
     keyboard.on_press_key('f1', stop_script)
-    keyboard.on_press_key('f2', capture_screenshot)
-    bring_window_to_front(game_info.title)
+    keyboard.on_press_key('f2', game_info.create_screenshot_function())
+    game_info.bring_window_to_front()
+
+    collect_money_worker = CollectMoneyWorker(game_info)
 
     while running:
-        time.sleep(5)  # every 5 seconds
+        collect_money_worker.collect_money()
+        time.sleep(1)
 
     print("程序已執行完畢。")
 
