@@ -12,7 +12,7 @@ class CollectMoneyWorker:
         self.set_next_time_to_collect()
 
     def set_next_time_to_collect(self):
-        self.next_time_to_collect = datetime.now() + timedelta(hours=1)
+        self.next_time_to_collect = datetime.now() + timedelta(minutes=10)
 
     def is_time_to_collect(self) -> bool:
         return datetime.now() > self.next_time_to_collect
@@ -32,7 +32,7 @@ class CollectMoneyWorker:
                 
                 if max_val > 0.8:  # 使用与之前相同的置信度
                     button = (max_loc[0] + resized_template.shape[1] // 2,
-                                     max_loc[1] + resized_template.shape[0] // 2 - 50 * scale)
+                                     max_loc[1] + resized_template.shape[0] // 2 - 70 * scale)
                     # pyautogui.moveTo(button)
                     pyautogui.click(button)
                     print(f"已点击收集金钱按钮（缩放比例：{scale}）")
