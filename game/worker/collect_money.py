@@ -60,7 +60,7 @@ class CollectMoneyWorker:
         if not self.game_info.is_in_game():
             return False
         
-        self.go_home_worker.go_home()
+        # self.go_home_worker.go_home()
 
         if not self.is_in_base_home():
             return False
