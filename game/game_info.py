@@ -11,6 +11,10 @@ class GameInfo:
         self.world_search_img_path = rf"{self.img_root}\world_search.png"
         self.money_collect_base_img_path = rf"{self.img_root}\money_collect_base.png"
         self.money_left_top_img_path = rf"{self.img_root}\money_left_top.png"
+        self.build_up_title_img_path = rf"{self.img_root}\build_up_title.png"
+        self.build_up_empty_slot_img_path = rf"{self.img_root}\build_up_empty_slot.png"
+        self.build_up_army8_img_path = rf"{self.img_root}\build_up_army8.png"
+        self.build_up_fight_img_path = rf"{self.img_root}\build_up_fight.png"
 
     def create_screenshot_function(self):
         return lambda e: capture_screenshot(e, self.img_tmp)
