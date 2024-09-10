@@ -9,6 +9,7 @@ class CollectMoneyWorker:
     def __init__(self, game_info: GameInfo):
         self.game_info = game_info
         self.go_home_worker = ChangeWorldWorker(game_info)
+        # self.next_time_to_collect = datetime.now()
         self.set_next_time_to_collect()
 
     def set_next_time_to_collect(self):
@@ -16,6 +17,13 @@ class CollectMoneyWorker:
 
     def is_time_to_collect(self) -> bool:
         return datetime.now() > self.next_time_to_collect
+
+    def is_in_base_home(self) -> bool:
+        try:
+            button_location = pyautogui.locateOnScreen(self.game_info.money_left_top_img_path, confidence=0.8)
+            return True
+        except pyautogui.ImageNotFoundException:
+            return False
 
     def collect_money_by_click(self) -> bool:
         scales = [1.0 + 0.16 * i for i in range(8)]
@@ -46,14 +54,16 @@ class CollectMoneyWorker:
         return False
 
     def collect_money(self) -> bool:
+        if not self.is_time_to_collect():
+            return False
 
         if not self.game_info.is_in_game():
             return False
         
-        if not self.is_time_to_collect():
-            return False
-        
         self.go_home_worker.go_home()
+
+        if not self.is_in_base_home():
+            return False
         
         return self.collect_money_by_click()
 
