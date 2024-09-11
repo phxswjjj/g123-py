@@ -1,4 +1,5 @@
 from game.worker.build_up import BuildUpWorker
+from game.worker.collect_alliance_gift import CollectAllianceGiftWorker
 from game.worker.collect_expedition import CollectExpeditionWorker
 from game.worker.collect_money import CollectMoneyWorker
 from utils.window_utils import bring_window_to_front
@@ -31,10 +32,13 @@ def main():
     collect_money_worker = CollectMoneyWorker(game_info)
     build_up_worker = BuildUpWorker(game_info)
     collect_expedition_worker = CollectExpeditionWorker(game_info)
+    collect_alliance_gift_worker = CollectAllianceGiftWorker(game_info)
+
     while running:
         collect_money_worker.collect_money()
         build_up_worker.build_up()
         collect_expedition_worker.collect_expedition()
+        collect_alliance_gift_worker.collect_alliance_gift()
         time.sleep(1)
 
     print("程序已執行完畢。")
