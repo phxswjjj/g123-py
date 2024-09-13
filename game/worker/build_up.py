@@ -8,7 +8,10 @@ from game.game_info import GameInfo
 class BuildUpWorker:
     def __init__(self, game_info: GameInfo):
         self.game_info = game_info
-        self.set_next_time_to_fight()
+        if self.game_info.is_immediate_run:
+            self.next_time_to_fight = datetime.now()
+        else:
+            self.set_next_time_to_fight()
 
     def set_next_time_to_fight(self):
         self.next_time_to_fight = datetime.now() + timedelta(seconds=5)

@@ -9,8 +9,10 @@ class CollectMoneyWorker:
     def __init__(self, game_info: GameInfo):
         self.game_info = game_info
         self.go_home_worker = ChangeWorldWorker(game_info)
-        # self.next_time_to_collect = datetime.now()
-        self.set_next_time_to_collect()
+        if self.game_info.is_immediate_run:
+            self.next_time_to_collect = datetime.now()
+        else:
+            self.set_next_time_to_collect()
 
     def set_next_time_to_collect(self):
         self.next_time_to_collect = datetime.now() + timedelta(minutes=10)

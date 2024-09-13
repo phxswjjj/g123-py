@@ -4,6 +4,7 @@ from utils.window_utils import capture_screenshot, bring_window_to_front, is_in_
 class GameInfo:
     def __init__(self):
         self.title = "鮮豔軍團 | 開始遊戲 - G123 - Google Chrome"
+        self.is_immediate_run = True
         self.img_root = ".\imgs"
         self.img_tmp = ".\imgs_tmp"
         self.back_home_img_path = rf"{self.img_root}\back_home.png"

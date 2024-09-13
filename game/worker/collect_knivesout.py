@@ -10,8 +10,10 @@ class CollectKnivesOutWorker:
     def __init__(self, game_info):
         self.game_info = game_info
         self.daily_military_intelligence_worker = DailyMilitaryIntelligenceWorker(game_info)
-        # self.next_time_to_collect = datetime.now()
-        self.set_next_time_to_collect()
+        if self.game_info.is_immediate_run:
+            self.next_time_to_collect = datetime.now()
+        else:
+            self.set_next_time_to_collect()
 
     def set_next_time_to_collect(self):
         self.next_time_to_collect = datetime.now() + timedelta(hours=1)
