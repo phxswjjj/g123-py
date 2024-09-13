@@ -19,7 +19,7 @@ class CollectAllianceGiftWorker:
 
     def is_in_base_home(self) -> bool:
         try:
-            pyautogui.locateOnScreen(self.game_info.money_left_top_img_path, confidence=1)
+            pyautogui.locateOnScreen(self.game_info.money_left_top_img_path, confidence=0.9)
             return True
         except pyautogui.ImageNotFoundException:
             return False
@@ -35,7 +35,7 @@ class CollectAllianceGiftWorker:
             return False
         
         try:
-            button_location = pyautogui.locateOnScreen(self.game_info.alliance_img_path, confidence=1)
+            button_location = pyautogui.locateOnScreen(self.game_info.alliance_img_path, confidence=0.9)
             button_center = pyautogui.center(button_location)
             pyautogui.click(button_center)
             print("已点击联盟按钮")

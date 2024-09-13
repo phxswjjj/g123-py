@@ -3,7 +3,6 @@ from game.worker.collect_alliance_gift import CollectAllianceGiftWorker
 from game.worker.collect_expedition import CollectExpeditionWorker
 from game.worker.collect_knivesout import CollectKnivesOutWorker
 from game.worker.collect_money import CollectMoneyWorker
-from utils.window_utils import bring_window_to_front
 from game.game_info import GameInfo
 import time
 import keyboard
