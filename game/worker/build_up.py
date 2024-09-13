@@ -3,9 +3,11 @@ from datetime import datetime, timedelta
 import time
 import pyautogui
 from game.game_info import GameInfo
+import inject
 
 
 class BuildUpWorker:
+    @inject.params(game_info=GameInfo)
     def __init__(self, game_info: GameInfo):
         self.game_info = game_info
         if self.game_info.is_immediate_run:

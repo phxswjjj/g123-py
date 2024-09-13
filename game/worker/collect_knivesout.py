@@ -4,10 +4,13 @@ import time
 import pyautogui
 
 from game.worker.daily_military_intellgence import DailyMilitaryIntelligenceWorker
+import inject
+from game.game_info import GameInfo
 
 
 class CollectKnivesOutWorker:
-    def __init__(self, game_info):
+    @inject.params(game_info=GameInfo)
+    def __init__(self, game_info: GameInfo):
         self.game_info = game_info
         self.daily_military_intelligence_worker = DailyMilitaryIntelligenceWorker(game_info)
         if self.game_info.is_immediate_run:

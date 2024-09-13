@@ -1,3 +1,4 @@
+import inject
 from game.game_info import GameInfo
 from game.worker.change_world import ChangeWorldWorker
 from datetime import datetime, timedelta
@@ -6,6 +7,7 @@ import cv2
 import numpy as np
 
 class CollectMoneyWorker:
+    @inject.params(game_info=GameInfo)
     def __init__(self, game_info: GameInfo):
         self.game_info = game_info
         self.go_home_worker = ChangeWorldWorker(game_info)

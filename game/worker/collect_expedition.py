@@ -5,9 +5,11 @@ import cv2
 import numpy as np
 import pyautogui
 from game.game_info import GameInfo
+import inject
 
 
 class CollectExpeditionWorker:
+    @inject.params(game_info=GameInfo)
     def __init__(self, game_info: GameInfo):
         self.game_info = game_info
         if self.game_info.is_immediate_run:
