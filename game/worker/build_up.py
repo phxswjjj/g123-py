@@ -29,6 +29,23 @@ class BuildUpWorker:
             return True
         except pyautogui.ImageNotFoundException:
             return False
+        
+    def is_joined(self) -> bool:
+        try:
+            pos = pyautogui.locateOnScreen(self.game_info.build_up_joined_img_path, confidence=0.8)
+            return True
+        except pyautogui.ImageNotFoundException:
+            return False
+        
+    def click_empty_slot(self) -> bool:
+        try:
+            pos = pyautogui.locateOnScreen(self.game_info.build_up_empty_slot_img_path, confidence=0.8)
+            button_center = pyautogui.center(pos)
+            pyautogui.click(button_center)
+            time.sleep(0.2)
+            return True
+        except pyautogui.ImageNotFoundException:
+            return False
 
     def build_up(self) -> bool:
 
@@ -38,29 +55,25 @@ class BuildUpWorker:
         if not self.is_in_build_up():
             return False
         
-        try:
-            # 有空的位置
-            empty_slot_pos = pyautogui.locateOnScreen(self.game_info.build_up_empty_slot_img_path, confidence=0.8)
-            button_center = pyautogui.center(empty_slot_pos)
-            pyautogui.click(button_center)
-        except pyautogui.ImageNotFoundException:
+        if self.is_joined():
             return False
         
-        time.sleep(0.2)
+        if not self.click_empty_slot():
+            return False
         
         try:
             # 套用第8軍團
             pos = pyautogui.locateOnScreen(self.game_info.build_up_army8_img_path, confidence=0.8)
             button_center = pyautogui.center(pos)
             pyautogui.click(button_center)
+            time.sleep(0.2)
         except pyautogui.ImageNotFoundException:
             self.logger.error("找不到第8軍團圖片")
             return False
         
-        time.sleep(0.2)
-
         # fight button
         pyautogui.click((959, 491))
+        time.sleep(0.2)
         
         self.set_next_time_to_fight()
         return True
