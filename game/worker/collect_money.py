@@ -1,5 +1,6 @@
 import time
 import inject
+import logging
 from game.game_info import GameInfo
 from game.worker.change_world import ChangeWorldWorker
 from datetime import datetime, timedelta
@@ -8,10 +9,11 @@ import cv2
 import numpy as np
 
 class CollectMoneyWorker:
-    @inject.params(game_info=GameInfo)
-    def __init__(self, game_info: GameInfo):
+    @inject.params(game_info=GameInfo, change_world_worker=ChangeWorldWorker, logger=logging.Logger)
+    def __init__(self, game_info: GameInfo, change_world_worker: ChangeWorldWorker, logger: logging.Logger):
         self.game_info = game_info
-        self.go_home_worker = ChangeWorldWorker(game_info)
+        self.logger = logger
+        self.change_world_worker = change_world_worker
         if self.game_info.is_immediate_run:
             self.next_time_to_collect = datetime.now()
         else:
@@ -48,17 +50,17 @@ class CollectMoneyWorker:
                                      max_loc[1] + resized_template.shape[0] // 2 - 70 * scale)
                     # pyautogui.moveTo(button)
                     pyautogui.click(button)
-                    print(f"已点击收集金钱按钮（缩放比例：{scale}）")
+                    self.logger.info(f"已点击收集金钱按钮（缩放比例：{scale}）")
                     time.sleep(0.5)
                     self.close_no_money_window()
                     self.set_next_time_to_collect()
                     time.sleep(0.2)
                     return True
             except Exception as e:
-                print(f"尝试缩放比例 {scale} 时出错：{str(e)}")
+                self.logger.error(f"尝试缩放比例 {scale} 时出错：{str(e)}")
                 continue
         
-        print("未找到收集金钱按钮")
+        self.logger.error("未找到收集金钱按钮")
         return False
     
     def close_no_money_window(self) -> bool:
@@ -76,7 +78,7 @@ class CollectMoneyWorker:
         if not self.game_info.is_in_game():
             return False
         
-        # self.go_home_worker.go_home()
+        # self.change_world_worker.go_home()
 
         if not self.is_in_base_home():
             return False

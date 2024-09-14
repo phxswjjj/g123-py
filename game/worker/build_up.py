@@ -4,12 +4,14 @@ import time
 import pyautogui
 from game.game_info import GameInfo
 import inject
+import logging
 
 
 class BuildUpWorker:
-    @inject.params(game_info=GameInfo)
-    def __init__(self, game_info: GameInfo):
+    @inject.params(game_info=GameInfo, logger=logging.Logger)
+    def __init__(self, game_info: GameInfo, logger: logging.Logger):
         self.game_info = game_info
+        self.logger = logger
         if self.game_info.is_immediate_run:
             self.next_time_to_fight = datetime.now()
         else:
@@ -52,7 +54,7 @@ class BuildUpWorker:
             button_center = pyautogui.center(pos)
             pyautogui.click(button_center)
         except pyautogui.ImageNotFoundException:
-            print("找不到第8軍團圖片")
+            self.logger.error("找不到第8軍團圖片")
             return False
         
         time.sleep(0.2)

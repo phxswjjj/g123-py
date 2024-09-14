@@ -1,3 +1,5 @@
+import json
+import logging
 from game.worker.build_up import BuildUpWorker
 from game.worker.collect_alliance_gift import CollectAllianceGiftWorker
 from game.worker.collect_expedition import CollectExpeditionWorker
@@ -7,6 +9,7 @@ from game.game_info import GameInfo
 import time
 import keyboard
 import inject
+import seqlog
 
 # global variable to control script running
 running = True
@@ -19,6 +22,30 @@ def stop_script(e):
 def configure_inject(binder):
     game_info = GameInfo()
     binder.bind(GameInfo, game_info)
+
+    logger = configure_seq()
+    binder.bind(logging.Logger, logger)
+
+def configure_seq() -> logging.Logger:
+    seqlog.log_to_seq(
+        server_url="http://seq.local:5341/",
+        level=logging.INFO,
+        batch_size=10,
+        auto_flush_timeout=10,  # seconds
+        override_root_logger=True,
+        json_encoder_class=json.encoder.JSONEncoder,
+        support_extra_properties=True
+    )
+
+    logger = logging.getLogger('g123')
+    
+    console = logging.StreamHandler()
+    console.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
+    console.setFormatter(formatter)
+    logger.addHandler(console)
+
+    return logger
 
 def main():
     global running

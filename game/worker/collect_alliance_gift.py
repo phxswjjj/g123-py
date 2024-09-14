@@ -1,5 +1,6 @@
 
 from datetime import datetime, timedelta
+import logging
 import time
 
 import pyautogui
@@ -8,9 +9,10 @@ from game.game_info import GameInfo
 
 
 class CollectAllianceGiftWorker:
-    @inject.params(game_info=GameInfo)
-    def __init__(self, game_info: GameInfo):
+    @inject.params(game_info=GameInfo, logger=logging.Logger)
+    def __init__(self, game_info: GameInfo, logger: logging.Logger):
         self.game_info = game_info
+        self.logger = logger
         if self.game_info.is_immediate_run:
             self.next_time_to_collect = datetime.now()
         else:
@@ -43,7 +45,7 @@ class CollectAllianceGiftWorker:
             button_location = pyautogui.locateOnScreen(self.game_info.alliance_img_path, confidence=0.9)
             button_center = pyautogui.center(button_location)
             pyautogui.click(button_center)
-            print("已点击联盟按钮")
+            self.logger.info("已点击联盟按钮")
         except pyautogui.ImageNotFoundException:
             return False
 

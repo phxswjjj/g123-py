@@ -6,12 +6,14 @@ import numpy as np
 import pyautogui
 from game.game_info import GameInfo
 import inject
+import logging
 
 
 class CollectExpeditionWorker:
-    @inject.params(game_info=GameInfo)
-    def __init__(self, game_info: GameInfo):
+    @inject.params(game_info=GameInfo, logger=logging.Logger)
+    def __init__(self, game_info: GameInfo, logger: logging.Logger):
         self.game_info = game_info
+        self.logger = logger
         if self.game_info.is_immediate_run:
             self.next_time_to_collect = datetime.now()
         else:
@@ -48,14 +50,14 @@ class CollectExpeditionWorker:
                                      max_loc[1] + resized_template.shape[0] // 2 - 60 * scale)
                     # pyautogui.moveTo(button)
                     pyautogui.click(button)
-                    print(f"已点击收集遠征按钮（缩放比例：{scale}）")
+                    self.logger.info(f"已点击收集遠征按钮（缩放比例：{scale}）")
                     self.set_next_time_to_collect()
                     return True
             except Exception as e:
-                print(f"尝试缩放比例 {scale} 时出错：{str(e)}")
+                self.logger.error(f"尝试缩放比例 {scale} 时出错：{str(e)}")
                 continue
         
-        print("未找到收集遠征按钮")
+        self.logger.error("未找到收集遠征按钮")
         return False
 
     def collect_expedition(self) -> bool:
