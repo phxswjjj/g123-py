@@ -36,6 +36,12 @@ class GameInfo:
     def is_in_base_home(self) -> bool:
         try:
             pyautogui.locateOnScreen(self.money_left_top_img_path, confidence=0.99)
-            return True
         except pyautogui.ImageNotFoundException:
             return False
+        
+        try:
+            pyautogui.locateOnScreen(self.go_world_img_path, confidence=0.99)
+        except pyautogui.ImageNotFoundException:
+            return False
+        
+        return True
