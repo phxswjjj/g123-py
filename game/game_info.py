@@ -1,3 +1,4 @@
+import pyautogui
 from utils.window_utils import capture_screenshot, bring_window_to_front, is_in_game
 
 # 建立 game info class
@@ -31,3 +32,10 @@ class GameInfo:
 
     def is_in_game(self):
         return is_in_game(self.title)
+
+    def is_in_base_home(self) -> bool:
+        try:
+            pyautogui.locateOnScreen(self.money_left_top_img_path, confidence=0.99)
+            return True
+        except pyautogui.ImageNotFoundException:
+            return False

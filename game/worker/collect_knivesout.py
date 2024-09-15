@@ -26,13 +26,6 @@ class CollectKnivesOutWorker:
     def is_time_to_collect(self) -> bool:
         return datetime.now() > self.next_time_to_collect
 
-    def is_in_base_home(self) -> bool:
-        try:
-            button_location = pyautogui.locateOnScreen(self.game_info.money_left_top_img_path, confidence=0.8)
-            return True
-        except pyautogui.ImageNotFoundException:
-            return False
-
     def collect_knives_out(self) -> bool:
         if not self.is_time_to_collect():
             return False
@@ -40,7 +33,7 @@ class CollectKnivesOutWorker:
         if not self.game_info.is_in_game():
             return False
         
-        if not self.is_in_base_home():
+        if not self.game_info.is_in_base_home():
             return False
         
         if not self.daily_military_intelligence_worker.go_daily_military_intelligence():

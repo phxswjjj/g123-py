@@ -23,23 +23,16 @@ class AllianceHelpWorker:
 
     def is_time_to_help(self) -> bool:
         return datetime.now() > self.next_time_to_help
-    
-    def is_in_base_home(self) -> bool:
-        try:
-            pyautogui.locateOnScreen(self.game_info.money_left_top_img_path, confidence=1)
-            return True
-        except pyautogui.ImageNotFoundException:
-            return False
         
     def help(self) -> bool:
         if not self.is_time_to_help():
             return False
 
-        if not self.is_in_base_home():
+        if not self.game_info.is_in_base_home():
             return False
         
         try:
-            pos = pyautogui.locateOnScreen(self.game_info.alliance_help_img_path, confidence=0.9)
+            pos = pyautogui.locateOnScreen(self.game_info.alliance_help_img_path, confidence=0.99)
             button_center = pyautogui.center(pos)
             pyautogui.click(button_center)
             time.sleep(0.2)
