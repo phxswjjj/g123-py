@@ -1,5 +1,6 @@
 import json
 import logging
+from game.worker.alliance_help import AllianceHelpWorker
 from game.worker.build_up import BuildUpWorker
 from game.worker.collect_alliance_gift import CollectAllianceGiftWorker
 from game.worker.collect_expedition import CollectExpeditionWorker
@@ -66,6 +67,7 @@ def main():
     collect_expedition_worker = inject.instance(CollectExpeditionWorker)
     collect_alliance_gift_worker = inject.instance(CollectAllianceGiftWorker)
     collect_knives_out_worker = inject.instance(CollectKnivesOutWorker)
+    alliance_help_worker = inject.instance(AllianceHelpWorker)
 
     while running:
         collect_money_worker.collect_money()
@@ -73,6 +75,7 @@ def main():
         collect_expedition_worker.collect_expedition()
         collect_alliance_gift_worker.collect_alliance_gift()
         collect_knives_out_worker.collect_knives_out()
+        alliance_help_worker.help()
         time.sleep(1)
 
     print("程序已執行完畢。")

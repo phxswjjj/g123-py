@@ -21,7 +21,8 @@ class GameInfo:
         self.daily_task_img_path = rf"{self.img_root}\daily_task.png"
         self.close_window_button_img_path = rf"{self.img_root}\close_window_button.png"
         self.build_up_joined_img_path = rf"{self.img_root}\build_up_joined.png"
-        
+        self.alliance_help_img_path = rf"{self.img_root}\alliance_help.png"
+
     def create_screenshot_function(self):
         return lambda e: capture_screenshot(e, self.img_tmp)
 
