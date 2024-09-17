@@ -11,6 +11,8 @@ import time
 import keyboard
 import inject
 import seqlog
+from win32api import GetKeyState
+from win32con import VK_CAPITAL
 
 # global variable to control script running
 running = True
@@ -70,12 +72,15 @@ def main():
     alliance_help_worker = inject.instance(AllianceHelpWorker)
 
     while running:
-        collect_money_worker.collect_money()
-        build_up_worker.build_up()
-        collect_expedition_worker.collect_expedition()
-        collect_alliance_gift_worker.collect_alliance_gift()
-        collect_knives_out_worker.collect_knives_out()
-        alliance_help_worker.help()
+        # caps lock on = pause, off = run
+        if not GetKeyState(VK_CAPITAL):
+            collect_money_worker.collect_money()
+            build_up_worker.build_up()
+            collect_expedition_worker.collect_expedition()
+            collect_alliance_gift_worker.collect_alliance_gift()
+            collect_knives_out_worker.collect_knives_out()
+            alliance_help_worker.help()
+
         time.sleep(1)
 
     print("程序已執行完畢。")
