@@ -32,7 +32,7 @@ class BuildUpWorker:
         
     def is_joined(self) -> bool:
         try:
-            pos = pyautogui.locateOnScreen(self.game_info.build_up_joined_img_path, confidence=0.8)
+            pos = pyautogui.locateOnScreen(self.game_info.build_up_joined_img_path, confidence=0.5)
             return True
         except pyautogui.ImageNotFoundException:
             return False
@@ -42,6 +42,25 @@ class BuildUpWorker:
             pos = pyautogui.locateOnScreen(self.game_info.build_up_empty_slot_img_path, confidence=0.8)
             button_center = pyautogui.center(pos)
             pyautogui.click(button_center)
+            time.sleep(0.2)
+            return True
+        except pyautogui.ImageNotFoundException:
+            return False
+        
+    def is_over_time_and_cancel(self) -> bool:
+        try:
+            pos = pyautogui.locateOnScreen(self.game_info.build_up_cancel_img_path, confidence=0.8)
+            button_center = pyautogui.center(pos)
+            self.logger.info("集結超時，取消")
+            pyautogui.click(button_center)
+            time.sleep(0.2)
+
+            # 回上一頁
+            pyautogui.click((34, 158))
+            time.sleep(0.2)
+
+            # 確定
+            pyautogui.click((1064, 654))
             time.sleep(0.2)
             return True
         except pyautogui.ImageNotFoundException:
@@ -74,6 +93,9 @@ class BuildUpWorker:
         # fight button
         pyautogui.click((959, 491))
         time.sleep(0.2)
+
+        if self.is_over_time_and_cancel():
+            return False
         
         self.set_next_time_to_fight()
         return True

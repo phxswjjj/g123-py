@@ -17,11 +17,12 @@ class GameInfo:
         self.build_up_empty_slot_img_path = rf"{self.img_root}\build_up_empty_slot.png"
         self.build_up_army8_img_path = rf"{self.img_root}\build_up_army8.png"
         self.build_up_fight_img_path = rf"{self.img_root}\build_up_fight.png"
+        self.build_up_joined_img_path = rf"{self.img_root}\build_up_joined.png"
+        self.build_up_cancel_img_path = rf"{self.img_root}\build_up_cancel.png"
         self.collect_expedition_img_path = rf"{self.img_root}\collect_expedition.png"
         self.alliance_img_path = rf"{self.img_root}\alliance.png"
         self.daily_task_img_path = rf"{self.img_root}\daily_task.png"
         self.close_window_button_img_path = rf"{self.img_root}\close_window_button.png"
-        self.build_up_joined_img_path = rf"{self.img_root}\build_up_joined.png"
         self.alliance_help_img_path = rf"{self.img_root}\alliance_help.png"
 
     def create_screenshot_function(self):
