@@ -19,6 +19,7 @@ class GameInfo:
         self.build_up_fight_img_path = rf"{self.img_root}\build_up_fight.png"
         self.build_up_joined_img_path = rf"{self.img_root}\build_up_joined.png"
         self.build_up_cancel_img_path = rf"{self.img_root}\build_up_cancel.png"
+        self.build_up_back_img_path = rf"{self.img_root}\build_up_back.png"
         self.collect_expedition_img_path = rf"{self.img_root}\collect_expedition.png"
         self.alliance_img_path = rf"{self.img_root}\alliance.png"
         self.daily_task_img_path = rf"{self.img_root}\daily_task.png"

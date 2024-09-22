@@ -66,6 +66,21 @@ class BuildUpWorker:
         except pyautogui.ImageNotFoundException:
             return False
 
+    def is_no_event_and_cancel(self) -> bool:
+        try:
+            pos = pyautogui.locateOnScreen(self.game_info.build_up_back_img_path, confidence=0.8)
+            button_center = pyautogui.center(pos)
+            self.logger.info("集結不存在，取消")
+            pyautogui.click(button_center)
+            time.sleep(0.2)
+
+            # 確定
+            pyautogui.click((1064, 654))
+            time.sleep(0.2)
+            return True
+        except pyautogui.ImageNotFoundException:
+            return False
+
     def build_up(self) -> bool:
 
         if not self.is_time_to_fight():
@@ -95,6 +110,10 @@ class BuildUpWorker:
         time.sleep(0.2)
 
         if self.is_over_time_and_cancel():
+            return False
+        
+        # 有返回按鈕，集結已不存在
+        if self.is_no_event_and_cancel():
             return False
         
         self.set_next_time_to_fight()
