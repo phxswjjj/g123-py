@@ -30,16 +30,16 @@ class BuildUpWorker:
         except pyautogui.ImageNotFoundException:
             return False
         
-    def is_joined(self) -> bool:
+    def is_joined(self, region=None) -> bool:
         try:
-            pos = pyautogui.locateOnScreen(self.game_info.build_up_joined_img_path, confidence=0.5)
+            pos = pyautogui.locateOnScreen(self.game_info.build_up_joined_img_path, confidence=0.5, region=region)
             return True
         except pyautogui.ImageNotFoundException:
             return False
         
-    def click_empty_slot(self) -> bool:
+    def click_empty_slot(self, region=None) -> bool:
         try:
-            pos = pyautogui.locateOnScreen(self.game_info.build_up_empty_slot_img_path, confidence=0.8)
+            pos = pyautogui.locateOnScreen(self.game_info.build_up_empty_slot_img_path, confidence=0.8, region=region)
             button_center = pyautogui.center(pos)
             pyautogui.click(button_center)
             time.sleep(0.2)
@@ -89,10 +89,12 @@ class BuildUpWorker:
         if not self.is_in_build_up():
             return False
         
-        if self.is_joined():
+        size = (250, 100)
+        region = (745, 270, *size)
+        if self.is_joined(region):
             return False
         
-        if not self.click_empty_slot():
+        if not self.click_empty_slot(region):
             return False
         
         try:
