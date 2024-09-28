@@ -26,6 +26,16 @@ class CollectKnivesOutWorker:
     def is_time_to_collect(self) -> bool:
         return datetime.now() > self.next_time_to_collect
 
+    def click_collect_all(self) -> bool:
+        try:
+            button_location = pyautogui.locateOnScreen(self.game_info.knivesout_collect_all_img_path, confidence=0.9)
+            button_center = pyautogui.center(button_location)
+            pyautogui.click(button_center)
+            self.logger.info("已点击一鍵領取")
+            return True
+        except pyautogui.ImageNotFoundException:
+            return False
+
     def collect_knives_out(self) -> bool:
         if not self.is_time_to_collect():
             return False
@@ -44,19 +54,24 @@ class CollectKnivesOutWorker:
         pyautogui.click((1097, 337))
         time.sleep(0.2)
 
-        # 前往領取畫面
-        pyautogui.click((755, 303))
-        time.sleep(0.2)
+        if not self.click_collect_all():
+            # 返回主頁
+            pyautogui.click((739, 145))
+            time.sleep(0.2)
+
+            self.set_next_time_to_collect()
+            return False
 
         # 領取
-        pyautogui.click((963, 860))
+        pyautogui.click((959, 846))
         time.sleep(0.5)
-        pyautogui.click((963, 860))
+        # 確定
+        pyautogui.click((971, 923))
+        time.sleep(0.5)
+        pyautogui.click((971, 923))
         time.sleep(0.2)
 
         # 返回主頁
-        pyautogui.click((739, 145))
-        time.sleep(0.2)
         pyautogui.click((739, 145))
         time.sleep(0.2)
 
