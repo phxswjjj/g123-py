@@ -89,7 +89,7 @@ class BuildUpWorker:
         if not self.is_in_build_up():
             return False
         
-        size = (250, 100)
+        size = (250, 200)
         region = (745, 270, *size)
         if self.is_joined(region):
             return False
