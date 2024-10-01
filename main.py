@@ -75,11 +75,12 @@ def main():
         # caps lock on = pause, off = run
         if not GetKeyState(VK_CAPITAL):
             # 金幣收割
-            collect_money_worker.collect_money()
+            # collect_money_worker.collect_money()
             # 集結
             build_up_worker.build_up()
             # 遠征行動
             # collect_expedition_worker.collect_expedition()
+            # 聯盟禮物
             collect_alliance_gift_worker.collect_alliance_gift()
             # 荒野行動(一鍵領取)
             collect_knives_out_worker.collect_knives_out()
