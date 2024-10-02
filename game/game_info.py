@@ -26,6 +26,8 @@ class GameInfo:
         self.close_window_button_img_path = rf"{self.img_root}\close_window_button.png"
         self.alliance_help_img_path = rf"{self.img_root}\alliance_help.png"
         self.knivesout_collect_all_img_path = rf"{self.img_root}\knivesOut_collect_all.png"
+        self.eqp_material_collect_img_path = rf"{self.img_root}\eqp_material_collect.png"
+        self.eqp_material_collect_production_img_path = rf"{self.img_root}\eqp_material_collect_production.png"
 
     def create_screenshot_function(self):
         return lambda e: capture_screenshot(e, self.img_tmp)

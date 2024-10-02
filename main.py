@@ -14,6 +14,8 @@ import seqlog
 from win32api import GetKeyState
 from win32con import VK_CAPITAL
 
+from game.worker.eqp_material_collect import EqpMaterialCollectWorker
+
 # global variable to control script running
 running = True
 
@@ -70,22 +72,28 @@ def main():
     collect_alliance_gift_worker = inject.instance(CollectAllianceGiftWorker)
     collect_knives_out_worker = inject.instance(CollectKnivesOutWorker)
     alliance_help_worker = inject.instance(AllianceHelpWorker)
+    eqp_material_collect_worker = inject.instance(EqpMaterialCollectWorker)
 
     while running:
         # caps lock on = pause, off = run
-        if not GetKeyState(VK_CAPITAL):
-            # 金幣收割
-            # collect_money_worker.collect_money()
-            # 集結
-            build_up_worker.build_up()
-            # 遠征行動
-            # collect_expedition_worker.collect_expedition()
-            # 聯盟禮物
-            collect_alliance_gift_worker.collect_alliance_gift()
-            # 荒野行動(一鍵領取)
-            collect_knives_out_worker.collect_knives_out()
-            # 聯盟封助
-            # alliance_help_worker.help()
+        if GetKeyState(VK_CAPITAL):
+            time.sleep(1)
+            continue
+
+        # 金幣收割
+        # collect_money_worker.collect_money()
+        # 集結
+        build_up_worker.build_up()
+        # 遠征行動
+        # collect_expedition_worker.collect_expedition()
+        # 聯盟禮物
+        collect_alliance_gift_worker.collect_alliance_gift()
+        # 荒野行動(一鍵領取)
+        collect_knives_out_worker.collect_knives_out()
+        # 聯盟封助
+        # alliance_help_worker.help()
+        # 裝備材料
+        eqp_material_collect_worker.collect()
 
         time.sleep(1)
 

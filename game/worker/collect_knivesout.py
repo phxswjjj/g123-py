@@ -50,12 +50,12 @@ class CollectKnivesOutWorker:
             return False
         
         # 前往荒野行動
-        self.logger.info("前往荒野行動")
         pyautogui.click((1097, 337))
         time.sleep(0.2)
 
+        # 一鍵領取
         if not self.click_collect_all():
-            # 返回主頁
+            # 冷卻中，返回主頁
             pyautogui.click((739, 145))
             time.sleep(0.2)
 
