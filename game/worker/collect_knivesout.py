@@ -21,7 +21,7 @@ class CollectKnivesOutWorker:
             self.set_next_time_to_collect()
 
     def set_next_time_to_collect(self):
-        self.next_time_to_collect = datetime.now() + timedelta(hours=1)
+        self.next_time_to_collect = datetime.now() + timedelta(minutes=10)
 
     def is_time_to_collect(self) -> bool:
         return datetime.now() > self.next_time_to_collect

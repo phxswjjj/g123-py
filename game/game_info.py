@@ -28,6 +28,8 @@ class GameInfo:
         self.knivesout_collect_all_img_path = rf"{self.img_root}\knivesOut_collect_all.png"
         self.eqp_material_collect_img_path = rf"{self.img_root}\eqp_material_collect.png"
         self.eqp_material_collect_production_img_path = rf"{self.img_root}\eqp_material_collect_production.png"
+        self.eqp_material_collect_empty5_img_path = rf"{self.img_root}\eqp_material_collect_empty5.png"
+        self.eqp_material_collect_back_img_path = rf"{self.img_root}\eqp_material_collect_back.png"
 
     def create_screenshot_function(self):
         return lambda e: capture_screenshot(e, self.img_tmp)
