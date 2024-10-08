@@ -64,7 +64,7 @@ class CollectKnivesOutWorker:
 
         # 領取
         pyautogui.click((959, 846))
-        time.sleep(0.5)
+        time.sleep(1)
         # 確定
         pyautogui.click((971, 923))
         time.sleep(0.5)
