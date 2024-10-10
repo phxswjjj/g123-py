@@ -1,5 +1,6 @@
 import json
 import logging
+from game.worker.abnormal import AbnormalWorker
 from game.worker.alliance_help import AllianceHelpWorker
 from game.worker.build_up import BuildUpWorker
 from game.worker.collect_alliance_gift import CollectAllianceGiftWorker
@@ -66,6 +67,7 @@ def main():
     keyboard.on_press_key('f2', game_info.create_screenshot_function())
     game_info.bring_window_to_front()
 
+    abnormal_worker = inject.instance(AbnormalWorker)
     collect_money_worker = inject.instance(CollectMoneyWorker)
     build_up_worker = inject.instance(BuildUpWorker)
     collect_expedition_worker = inject.instance(CollectExpeditionWorker)
@@ -79,6 +81,9 @@ def main():
         if GetKeyState(VK_CAPITAL):
             time.sleep(1)
             continue
+
+        # 連線中斷
+        abnormal_worker.reconnection()
 
         # 金幣收割
         # collect_money_worker.collect_money()
