@@ -45,6 +45,35 @@ class AbnormalWorker:
         
         # 確定
         pyautogui.click((959, 660))
+        time.sleep(3)
+        
+        self.set_next_time_to_work()
+
+        return True
+    
+    def is_move_base(self) -> bool:
+        try:
+            pos = pyautogui.locateOnScreen(self.game_info.move_base_img_path, confidence=0.9)
+            button_center = pyautogui.center(pos)
+            self.logger.info("遷城")
+            return True
+        except pyautogui.ImageNotFoundException:
+            return False
+
+    def cancel_move_base(self) -> bool:
+        if not self.is_time_to_work():
+            return False
+
+        if not self.game_info.is_in_game():
+            return False
+        
+        if not self.is_move_base():
+            return False
+        
+        # 關閉視窗
+        pyautogui.click((1140, 431))
         time.sleep(1)
+        
+        self.set_next_time_to_work()
 
         return True

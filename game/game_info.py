@@ -31,6 +31,7 @@ class GameInfo:
         self.eqp_material_collect_empty5_img_path = rf"{self.img_root}\eqp_material_collect_empty5.png"
         self.eqp_material_collect_back_img_path = rf"{self.img_root}\eqp_material_collect_back.png"
         self.disconnection_img_path = rf'{self.img_root}\disconnection.png'
+        self.move_base_img_path = rf'{self.img_root}\move_base.png'
 
     def create_screenshot_function(self):
         return lambda e: capture_screenshot(e, self.img_tmp)

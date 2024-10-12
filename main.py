@@ -84,6 +84,8 @@ def main():
 
         # 連線中斷
         abnormal_worker.reconnection()
+        # 取消遷城
+        abnormal_worker.cancel_move_base()
 
         # 金幣收割
         # collect_money_worker.collect_money()
