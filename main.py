@@ -16,6 +16,7 @@ from win32api import GetKeyState
 from win32con import VK_CAPITAL
 
 from game.worker.eqp_material_collect import EqpMaterialCollectWorker
+from game.worker.treasure_raider import TreasureRaiderWorker
 
 # global variable to control script running
 running = True
@@ -75,6 +76,7 @@ def main():
     collect_knives_out_worker = inject.instance(CollectKnivesOutWorker)
     alliance_help_worker = inject.instance(AllianceHelpWorker)
     eqp_material_collect_worker = inject.instance(EqpMaterialCollectWorker)
+    treasure_raider_worker = inject.instance(TreasureRaiderWorker)
 
     while running:
         # caps lock on = pause, off = run
@@ -101,6 +103,9 @@ def main():
         # alliance_help_worker.help()
         # 裝備材料
         eqp_material_collect_worker.collect()
+
+        # 奪寶奇兵-尋找敵方基地
+        treasure_raider_worker.search_raider()
 
         time.sleep(1)
 
