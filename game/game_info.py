@@ -10,6 +10,7 @@ class GameInfo:
         self.img_tmp = ".\imgs_tmp"
         self.back_home_img_path = rf"{self.img_root}\back_home.png"
         self.go_world_img_path = rf"{self.img_root}\go_world.png"
+        self.go_world2_img_path = rf"{self.img_root}\go_world2.png"
         self.world_search_img_path = rf"{self.img_root}\world_search.png"
         self.money_collect_base_img_path = rf"{self.img_root}\money_collect_base.png"
         self.money_left_top_img_path = rf"{self.img_root}\money_left_top.png"
@@ -53,7 +54,10 @@ class GameInfo:
         
         try:
             pyautogui.locateOnScreen(self.go_world_img_path, confidence=0.99)
-        except pyautogui.ImageNotFoundException:
-            return False
+        except pyautogui.ImageNotFoundException:            
+            try:
+                pyautogui.locateOnScreen(self.go_world2_img_path, confidence=0.99)
+            except pyautogui.ImageNotFoundException:
+                return False
         
         return True
