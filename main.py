@@ -16,6 +16,7 @@ from win32api import GetKeyState
 from win32con import VK_CAPITAL
 
 from game.worker.eqp_material_collect import EqpMaterialCollectWorker
+from game.worker.exercise_challenge import ExerciseChallengeWorker
 from game.worker.treasure_raider import TreasureRaiderWorker
 
 # global variable to control script running
@@ -34,15 +35,15 @@ def configure_inject(binder):
     binder.bind(logging.Logger, logger)
 
 def configure_seq() -> logging.Logger:
-    seqlog.log_to_seq(
-        server_url="http://seq.local:5341/",
-        level=logging.INFO,
-        batch_size=10,
-        auto_flush_timeout=10,  # seconds
-        override_root_logger=True,
-        json_encoder_class=json.encoder.JSONEncoder,
-        support_extra_properties=True
-    )
+    # seqlog.log_to_seq(
+    #     server_url="http://seq.local:5341/",
+    #     level=logging.INFO,
+    #     batch_size=10,
+    #     auto_flush_timeout=10,  # seconds
+    #     override_root_logger=True,
+    #     json_encoder_class=json.encoder.JSONEncoder,
+    #     support_extra_properties=True
+    # )
 
     logger = logging.getLogger('g123')
     
@@ -77,6 +78,7 @@ def main():
     alliance_help_worker = inject.instance(AllianceHelpWorker)
     eqp_material_collect_worker = inject.instance(EqpMaterialCollectWorker)
     treasure_raider_worker = inject.instance(TreasureRaiderWorker)
+    exercise_challenge_worker = inject.instance(ExerciseChallengeWorker)
 
     while running:
         # caps lock on = pause, off = run
@@ -106,6 +108,9 @@ def main():
 
         # 奪寶奇兵-尋找敵方基地
         treasure_raider_worker.search_raider()
+
+        # 跨戰區演習挑戰
+        exercise_challenge_worker.challenge()
 
         time.sleep(1)
 

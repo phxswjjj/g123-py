@@ -36,6 +36,8 @@ class GameInfo:
         self.map_watch_full_img_path = rf'{self.img_root}\map_watch_full.png'
         self.map_treasure_raider_img_path = rf'{self.img_root}\map_treasure_raider.png'
         self.map_thor_mine_img_path = rf'{self.img_root}\map_thor_mine.png'
+        self.exercise_challenge_img_path = rf'{self.img_root}\exercise_challenge.png'
+        self.exercise_challenge_free_img_path = rf'{self.img_root}\exercise_challenge_free.png'
 
     def create_screenshot_function(self):
         return lambda e: capture_screenshot(e, self.img_tmp)
